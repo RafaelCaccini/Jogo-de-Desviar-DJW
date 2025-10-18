@@ -2,25 +2,33 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Corrida de Carros Minimalista</title>
-<link rel="stylesheet" href="estilo.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>Corrida de Carros Minimalista Futurista</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet" />
+
 </head>
+<body class="menu-fundo">
 
-<body>
-
-<canvas id="jogoCanvas" width="480" height="600"></canvas>
+<div id="canvas-container">
+  <canvas id="jogoCanvas"></canvas>
+</div>
 
 <div id="menu">
   <h1>Corrida de Carros</h1>
   <p>Escolha a dificuldade:</p>
-  <button onclick="iniciarJogo('facil')">Fácil</button>
-  <button onclick="iniciarJogo('medio')">Médio</button>
-  <button onclick="iniciarJogo('dificil')">Difícil</button>
+  <button id="btn-facil">Fácil</button>
+  <button id="btn-medio">Médio</button>
+  <button id="btn-dificil">Difícil</button>
+</div>
+
+<div id="game-over">
+  <h1>Game Over</h1>
+  <p id="final-score">Pontuação Final: 0</p>
+  <button id="btn-reiniciar">Voltar ao Menu</button>
 </div>
 
 <div id="pontuacao" style="display:none;">Pontuação: 0</div>
 
+
 </body>
-<script src="script.js"></script>
 </html>

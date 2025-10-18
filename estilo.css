@@ -20,7 +20,7 @@
     background: #121a26;
   }
 
- 
+  /* Container centralizado para o canvas */
   #canvas-container {
     max-width: 480px;
     max-height: 600px;
@@ -33,6 +33,7 @@
       inset 0 0 40px rgba(0, 255, 255, 0.1);
     background: #111;
     position: relative;
+    z-index: 10; /* Abaixo dos menus */
   }
 
   canvas {
@@ -42,7 +43,7 @@
     border-radius: 12px;
   }
 
-
+  /* Menu */
   #menu {
     position: fixed;
     top: 50%;
@@ -56,7 +57,7 @@
       0 0 15px #00fff7,
       0 0 30px #00fff7;
     text-align: center;
-    z-index: 20;
+    z-index: 30; /* Acima de tudo */
     width: 320px;
   }
   #menu h1 {
@@ -102,6 +103,70 @@
     transform: scale(1.05);
   }
   #menu button:active {
+    transform: scale(0.98);
+  }
+
+  /* Tela de Game Over */
+  #game-over {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(10, 25, 40, 0.85);
+    border: 2px solid #ff5555;
+    border-radius: 16px;
+    padding: 40px 60px;
+    box-shadow:
+      0 0 15px #ff5555,
+      0 0 30px #ff5555;
+    text-align: center;
+    z-index: 30; /* Acima de tudo */
+    width: 320px;
+    display: none;
+  }
+  #game-over h1 {
+    font-weight: 600;
+    font-size: 2.8rem;
+    margin-bottom: 24px;
+    color: #ff5555;
+    text-shadow:
+      0 0 8px #ff5555,
+      0 0 20px #ff5555;
+    letter-spacing: 2px;
+  }
+  #game-over p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #a0d8ef;
+    font-weight: 500;
+  }
+  #game-over button {
+    background: linear-gradient(145deg, #4d0000, #7f0000);
+    border: none;
+    color: #f7e0e0;
+    padding: 14px 28px;
+    margin: 10px 8px;
+    font-size: 1.25rem;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow:
+      0 0 8px #ff5555,
+      inset 0 0 6px #ff5555;
+    transition:
+      background 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.2s ease;
+    min-width: 120px;
+    font-weight: 600;
+  }
+  #game-over button:hover {
+    background: linear-gradient(145deg, #ff5555, #b30000);
+    box-shadow:
+      0 0 20px #ff5555,
+      inset 0 0 12px #ff5555;
+    transform: scale(1.05);
+  }
+  #game-over button:active {
     transform: scale(0.98);
   }
 

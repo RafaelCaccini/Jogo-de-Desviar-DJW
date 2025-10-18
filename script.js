@@ -1,7 +1,18 @@
   const canvas = document.getElementById("jogoCanvas");
   const ctx = canvas.getContext("2d");
   const menu = document.getElementById("menu");
+  const gameOver = document.getElementById("game-over");
   const pontuacaoDiv = document.getElementById("pontuacao");
+  const finalScore = document.getElementById("final-score");
+  const canvasContainer = document.getElementById("canvas-container");
+
+  // Ajusta o tamanho do canvas para o container
+  function ajustarTamanhoCanvas() {
+    canvas.width = canvasContainer.clientWidth;
+    canvas.height = canvasContainer.clientHeight;
+  }
+  ajustarTamanhoCanvas();
+  window.addEventListener("resize", ajustarTamanhoCanvas);
 
   let jogoAtivo = false;
   let velocidadeObstaculos;
@@ -55,7 +66,10 @@
     };
 
     menu.style.display = "none";
+    gameOver.style.display = "none";
     pontuacaoDiv.style.display = "block";
+    document.body.classList.remove("menu-fundo");
+    document.body.classList.add("jogo-fundo");
     atualizarPontuacao();
     requestAnimationFrame(atualizarJogo);
   }
@@ -68,9 +82,11 @@
   function moverCarro() {
     if (teclado["ArrowLeft"] && carro.x > 0) {
       carro.x -= carro.velocidade;
+      if (carro.x < 0) carro.x = 0;
     }
     if (teclado["ArrowRight"] && carro.x < canvas.width - carro.largura) {
       carro.x += carro.velocidade;
+      if (carro.x > canvas.width - carro.largura) carro.x = canvas.width - carro.largura;
     }
   }
 
@@ -101,15 +117,21 @@
 
   function detectarColisao() {
     for (let obstaculo of obstaculos) {
+      // Margem pequena para evitar falsos positivos (ex: 2px)
+      const margem = 2;
       if (
-        carro.x < obstaculo.x + obstaculo.largura &&
-        carro.x + carro.largura > obstaculo.x &&
-        carro.y < obstaculo.y + obstaculo.altura &&
-        carro.y + carro.altura > obstaculo.y
+        carro.x + margem < obstaculo.x + obstaculo.largura &&
+        carro.x + carro.largura - margem > obstaculo.x &&
+        carro.y + margem < obstaculo.y + obstaculo.altura &&
+        carro.y + carro.altura - margem > obstaculo.y
       ) {
         tocarSom(150, 0.3); // som colisão
-        alert("Você perdeu! Fim de jogo.");
-        reiniciarJogo();
+        jogoAtivo = false; // Para o jogo imediatamente
+        pontuacaoDiv.style.display = "none";
+        finalScore.textContent = "Pontuação Final: " + pontuacao;
+        gameOver.style.display = "block";
+        document.body.classList.remove("jogo-fundo");
+        document.body.classList.add("menu-fundo");
         break;
       }
     }
@@ -122,7 +144,7 @@
   function atualizarJogo() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Fundo minimalista: linhas verticais simulando pista
+    // Fundo pista minimalista: linhas verticais simulando pista
     ctx.fillStyle = "#222";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.strokeStyle = "#555";
@@ -160,8 +182,17 @@
   function reiniciarJogo() {
     jogoAtivo = false;
     pontuacaoDiv.style.display = "none";
+    gameOver.style.display = "none";
     menu.style.display = "block";
+    document.body.classList.remove("jogo-fundo");
+    document.body.classList.add("menu-fundo");
   }
+
+  // Event listeners para os botões (mais robusto que onclick inline)
+  document.getElementById("btn-facil").addEventListener("click", () => iniciarJogo("facil"));
+  document.getElementById("btn-medio").addEventListener("click", () => iniciarJogo("medio"));
+  document.getElementById("btn-dificil").addEventListener("click", () => iniciarJogo("dificil"));
+  document.getElementById("btn-reiniciar").addEventListener("click", reiniciarJogo);
 
   // Controlar teclas
   window.addEventListener("keydown", e => {
