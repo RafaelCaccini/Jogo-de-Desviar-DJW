@@ -7,12 +7,16 @@
 html, body {
   height: 100%;
   display: flex;
-  justify-content: center; /* horizontal */
-  align-items: center;    /* vertical */
+  justify-content: center; /* centraliza horizontal */
+  align-items: center;     /* centraliza vertical */
+  flex-direction: column;  /* garante que filhos fiquem empilhados */
   font-family: 'Orbitron', sans-serif, Arial, sans-serif;
   color: #cfd8dc;
   overflow: hidden;
+  margin: 0;
+  background: #121a26; /* ou sua classe menu-fundo */
 }
+
 
 body.menu-fundo {
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
@@ -46,8 +50,10 @@ canvas {
 
 /* Menu - Centralizado perfeitamente */
 #menu {
-  position: relative; /* Remove fixed, agora o flex do body centraliza */
-  transform: none;   /* Não precisa mais do translate */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 40px 60px;
   border-radius: 16px;
   text-align: center;
@@ -59,7 +65,9 @@ canvas {
   width: 90vw;
   max-width: 320px;
   min-height: 300px;
+  z-index: 30; /* garante que fique acima do canvas */
 }
+
 
 #menu h1 {
   font-weight: 600;
