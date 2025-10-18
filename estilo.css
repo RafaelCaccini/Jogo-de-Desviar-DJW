@@ -1,195 +1,199 @@
-  /* Reset básico */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  html, body {
-    height: 100%;
-    font-family: 'Orbitron', sans-serif, Arial, sans-serif;
-    color: #cfd8dc;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    user-select: none;
-    transition: background 0.5s ease;
-  }
-  body.menu-fundo {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  }
-  body.jogo-fundo {
-    background: #121a26;
-  }
+/* RESET GLOBAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  /* Container centralizado para o canvas */
-  #canvas-container {
-    max-width: 480px;
-    max-height: 600px;
-    width: 90vw;
-    height: 90vh;
-    margin: 40px auto;
-    border-radius: 12px;
-    box-shadow:
-      0 0 20px rgba(0, 255, 255, 0.3),
-      inset 0 0 40px rgba(0, 255, 255, 0.1);
-    background: #111;
-    position: relative;
-    z-index: 10; /* Abaixo dos menus */
-  }
+html, body {
+  height: 100%;
+  font-family: 'Orbitron', Arial, sans-serif;
+  color: #cfd8dc;
+  background: #0f2027;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  overflow: hidden;
+}
 
-  canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    border-radius: 12px;
-  }
+/* ESTADOS DE FUNDO */
+body.menu-fundo {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
 
-  /* Menu */
-  #menu {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+body.jogo-fundo {
+  background: #121a26;
+}
+
+/* CONTAINER DO JOGO */
+#canvas-container {
+  position: relative;
+  max-width: 480px;
+  max-height: 600px;
+  width: 90vw;
+  height: 90vh;
+  margin: 40px auto;
+  border-radius: 12px;
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.3),
+    inset 0 0 40px rgba(0, 255, 255, 0.1);
+  background: #111;
+  overflow: hidden;
+  z-index: 10;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+/* MENU PRINCIPAL */
+#menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(10, 25, 40, 0.95);
+  border: 2px solid #00fff7;
+  border-radius: 16px;
+  padding: 40px 60px;
+  width: 90%;
+  max-width: 320px;
+  box-shadow:
+    0 0 20px #00fff7,
+    0 0 40px rgba(0, 255, 247, 0.5);
+  text-align: center;
+  z-index: 30;
+  animation: menuFade 0.6s ease;
+}
+
+#menu h1 {
+  font-weight: 600;
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  color: #00fff7;
+  text-shadow: 0 0 8px #00fff7;
+  letter-spacing: 1px;
+}
+
+#menu p {
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+  color: #a0d8ef;
+  font-weight: 500;
+}
+
+#menu button {
+  background: linear-gradient(145deg, #004d4d, #009999);
+  border: none;
+  color: #e0f7f7;
+  padding: 12px 24px;
+  margin: 10px 8px;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow:
+    0 0 8px #00fff7,
+    inset 0 0 6px #00fff7;
+  transition: all 0.25s ease;
+  min-width: 100px;
+  font-weight: 600;
+}
+
+#menu button:hover {
+  transform: scale(1.08);
+  background: linear-gradient(145deg, #007f7f, #00bfbf);
+}
+
+#menu button:active {
+  transform: scale(0.96);
+}
+
+/* ANIMAÇÃO DE APARIÇÃO */
+@keyframes menuFade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
     transform: translate(-50%, -50%);
-    background: rgba(10, 25, 40, 0.85);
-    border: 2px solid #00fff7;
-    border-radius: 16px;
-    padding: 40px 60px;
-    box-shadow:
-      0 0 15px #00fff7,
-      0 0 30px #00fff7;
-    text-align: center;
-    z-index: 30; /* Acima de tudo */
-    width: 320px;
   }
-  #menu h1 {
-    font-weight: 600;
-    font-size: 2.8rem;
-    margin-bottom: 24px;
-    color: #00fff7;
-    text-shadow:
-      0 0 8px #00fff7,
-      0 0 20px #00fff7;
-    letter-spacing: 2px;
+}
+
+/* TELA DE GAME OVER */
+#game-over {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(10, 25, 40, 0.95);
+  border: 2px solid #ff5555;
+  border-radius: 16px;
+  padding: 40px 60px;
+  width: 90%;
+  max-width: 320px;
+  box-shadow:
+    0 0 15px #ff5555,
+    0 0 30px rgba(255, 85, 85, 0.7);
+  text-align: center;
+  z-index: 40;
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+#game-over h1 {
+  font-weight: 600;
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  color: #ff5555;
+  text-shadow: 0 0 8px #ff5555;
+  letter-spacing: 1px;
+}
+
+/* PLACAR */
+#pontuacao {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00fff7;
+  text-shadow: 0 0 6px #00fff7;
+  z-index: 20;
+  user-select: none;
+  background: rgba(0, 255, 247, 0.06);
+  padding: 8px 20px;
+  border-radius: 12px;
+  border: 1.5px solid #00fff7;
+  box-shadow: 0 0 10px #00fff7;
+  min-width: 140px;
+  text-align: center;
+  display: none;
+}
+
+/* ANIMAÇÃO GAME OVER */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -55%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 480px) {
+  #menu, #game-over {
+    padding: 30px 20px;
   }
-  #menu p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #a0d8ef;
-    font-weight: 500;
+
+  #menu h1, #game-over h1 {
+    font-size: 1.8rem;
   }
+
   #menu button {
-    background: linear-gradient(145deg, #004d4d, #007f7f);
-    border: none;
-    color: #e0f7f7;
-    padding: 14px 28px;
-    margin: 10px 8px;
-    font-size: 1.25rem;
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow:
-      0 0 8px #00fff7,
-      inset 0 0 6px #00fff7;
-    transition:
-      background 0.3s ease,
-      box-shadow 0.3s ease,
-      transform 0.2s ease;
-    min-width: 120px;
-    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 10px 16px;
+    margin: 8px;
   }
-  #menu button:hover {
-    background: linear-gradient(145deg, #00fff7, #00b3b3);
-    box-shadow:
-      0 0 20px #00fff7,
-      inset 0 0 12px #00fff7;
-    transform: scale(1.05);
-  }
-  #menu button:active {
-    transform: scale(0.98);
-  }
-
-  /* Tela de Game Over */
-  #game-over {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(10, 25, 40, 0.85);
-    border: 2px solid #ff5555;
-    border-radius: 16px;
-    padding: 40px 60px;
-    box-shadow:
-      0 0 15px #ff5555,
-      0 0 30px #ff5555;
-    text-align: center;
-    z-index: 30; /* Acima de tudo */
-    width: 320px;
-    display: none;
-  }
-  #game-over h1 {
-    font-weight: 600;
-    font-size: 2.8rem;
-    margin-bottom: 24px;
-    color: #ff5555;
-    text-shadow:
-      0 0 8px #ff5555,
-      0 0 20px #ff5555;
-    letter-spacing: 2px;
-  }
-  #game-over p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #a0d8ef;
-    font-weight: 500;
-  }
-  #game-over button {
-    background: linear-gradient(145deg, #4d0000, #7f0000);
-    border: none;
-    color: #f7e0e0;
-    padding: 14px 28px;
-    margin: 10px 8px;
-    font-size: 1.25rem;
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow:
-      0 0 8px #ff5555,
-      inset 0 0 6px #ff5555;
-    transition:
-      background 0.3s ease,
-      box-shadow 0.3s ease,
-      transform 0.2s ease;
-    min-width: 120px;
-    font-weight: 600;
-  }
-  #game-over button:hover {
-    background: linear-gradient(145deg, #ff5555, #b30000);
-    box-shadow:
-      0 0 20px #ff5555,
-      inset 0 0 12px #ff5555;
-    transform: scale(1.05);
-  }
-  #game-over button:active {
-    transform: scale(0.98);
-  }
-
-  /* Placar */
-  #pontuacao {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2rem;
-    font-weight: 700;
-    color: #00fff7;
-    text-shadow:
-      0 0 6px #00fff7,
-      0 0 12px #00fff7;
-    z-index: 20;
-    user-select: none;
-    background: rgba(0, 255, 247, 0.1);
-    padding: 8px 24px;
-    border-radius: 12px;
-    border: 1.5px solid #00fff7;
-    box-shadow:
-      0 0 10px #00fff7;
-    min-width: 160px;
-    text-align: center;
-  }
+}
